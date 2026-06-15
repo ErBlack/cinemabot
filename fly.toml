@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for ercinemabot on 2026-06-15T12:38:10Z
+# fly.toml app configuration file generated for ercinemabot on 2026-06-15T13:26:02Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -12,3 +12,12 @@ primary_region = 'iad'
   cpu_kind = 'shared'
   cpus = 1
   memory_mb = 256
+  memory = '1gb'
+
+[http_service]
+  auto_start_machines = false
+  auto_stop_machines = 'off'
+  force_https = true
+  internal_port = 8080
+  min_machines_running = 0
+  processes = ['app']
