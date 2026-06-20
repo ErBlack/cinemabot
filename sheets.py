@@ -1,13 +1,14 @@
 import json
 import os
 from datetime import datetime
+from typing import Optional
 
 import gspread
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 HEADERS = ["link", "title", "added_by", "added_at", "current", "watched", "watched_at"]
 
-_worksheet: gspread.Worksheet | None = None
+_worksheet: Optional[gspread.Worksheet] = None
 
 
 def _get_worksheet() -> gspread.Worksheet:
@@ -55,7 +56,7 @@ def add_film(link: str, title: str, added_by: str) -> bool:
     return True
 
 
-def get_current_film() -> dict | None:
+def get_current_film() -> Optional[dict]:
     """Возвращает текущий (выбранный для просмотра) фильм или None."""
     worksheet = _get_worksheet()
     records = worksheet.get_all_records(default_blank="")
@@ -89,7 +90,7 @@ def set_current_film(row: int) -> None:
     worksheet.update_cell(row, current_col, "TRUE")
 
 
-def mark_watched() -> dict | None:
+def mark_watched() -> Optional[dict]:
     """Помечает текущий фильм как просмотренный. Возвращает фильм или None."""
     worksheet = _get_worksheet()
     records = worksheet.get_all_records(default_blank="")
